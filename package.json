@@ -1,0 +1,24 @@
+{
+  "name": "chater.2000",
+  "version": "1.0.0",
+  "description": "vue, node, socket.io",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "nodemon server/server.js"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "vue",
+    "socketio"
+  ],
+  "author": "Daria Ivanovich",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.4"
+  }
+}
