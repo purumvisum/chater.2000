@@ -27,6 +27,7 @@
         >
           Create Room
         </v-btn>
+          <router-link to="/chat">Go to Foo</router-link>
       </v-form>
     </v-card>
   </v-container>

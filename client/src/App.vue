@@ -1,14 +1,11 @@
 <template>
-  <v-app>
-
-    <v-content>
-      <HelloWorld/>
-    </v-content>
-  </v-app>
+    <v-app>
+        <router-view class="view"></router-view>
+    </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+import HelloWorld from './components/CreateRoom'
 
 export default {
   name: 'App',
