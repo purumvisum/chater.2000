@@ -7,27 +7,30 @@
       <v-form
         @submit.prevent="submit"
         ref="form"
+        v-model="valid"
+        :lazy-validation='false'
       >
         <v-text-field
           v-model="name"
           label="Name"
+          :rules="[v => !!v || 'Item is required']"
           required
         ></v-text-field>
 
         <v-text-field
           v-model="room"
           label="Room"
+          :rules="[v => !!v || 'Item is required']"
           required
         ></v-text-field>
 
         <v-btn
-          class="booking-submit-button"
+          style="margin-top: 10px; width: 100%"
           color="secondary"
           type="submit"
         >
           Create Room
         </v-btn>
-          <router-link to="/chat">Go to Foo</router-link>
       </v-form>
     </v-card>
   </v-container>
@@ -36,7 +39,15 @@
 export default {
     data: () => ({
         name: '',
-        room: ''
+        room: '',
+        valid: true,
+        nameRules: [
+            v => !!v || 'Name is required'
+       ],
+        email: '',
+        emailRules: [
+            v => !!v || 'E-mail is required'
+        ],
     }),
     sockets: {
         connect: function () {
@@ -48,9 +59,11 @@ export default {
     },
     methods: {
         enterTheRoom() {
-            this.$router.push('/non-existing');
-            let value = 'test';
-            this.$socket.emit('createMessage','TEST')
+            if (this.$refs.form.validate()) {
+                this.$router.push('/chat');
+                let value = 'test';
+                this.$socket.emit('createMessage','TEST')
+            }
         },
         submit() {
           this.enterTheRoom();
