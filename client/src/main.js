@@ -9,6 +9,7 @@ Vue.use(new VueSocketIO({
     debug: true,
     connection: 'http://localhost:3000'
 }));
+
 new Vue({
     router,
     vuetify,

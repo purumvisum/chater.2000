@@ -16,16 +16,18 @@ const io = socketIO(server);
 app.use(express.static(publicPath));
 
 io.on('connection', (socket) => {
-    console.log("IO Connection");
-
-    socket.on("createMessage", (data) => {
-        console.log("create message", data);
-        socket.emit("newMessage", {
-            text: data.value,
-            date: Date.now()
-        })
+    socket.on("message:create", (data, callback) => {
+        if (!data) {
+            callback("MESSAGE CANNOT BE EMPTY")
+        } else {
+            callback();
+            socket.emit("message:new", {
+                text: data.text,
+                date: Date.now()
+            })
+        }
     })
-})
+});
 
 server.listen (port, ()=>{
     console.log(`Server has been started om ${port}...`);
