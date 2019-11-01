@@ -12,7 +12,7 @@ class Users {
     remove(id) {
         const user = this.get(id);
         if (user) {
-            this.users = this.users.filter( user => user.id !== user.id)
+            this.users = this.users.filter( user => user.id !== id)
         }
         return user;
     }
@@ -22,7 +22,7 @@ class Users {
     }
 
     getByRoom(room) {
-        return this.users.find(user => user.room === room);
+        return this.users.filter(user => user.room === room);
     }
 }
 

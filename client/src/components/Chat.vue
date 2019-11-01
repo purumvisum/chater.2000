@@ -3,26 +3,15 @@
 
         <div class="users-list">
 
-            <v-chip pill class="user">
+            <v-chip v-for="(user, idx) in usersInTheRoom" pill class="user">
                 <v-avatar
                     left
                     color="#afadad"
                 >
-                    P
+                    {{user.name.split('')[0]}}
                 </v-avatar>
-                Pill
+                {{user.name}}
             </v-chip>
-
-            <v-chip pill class="user">
-                <v-avatar
-                    left
-                    color="#afadad"
-                >
-                    P
-                </v-avatar>
-                Pill
-            </v-chip>
-
         </div>
 
         <div  class="messages-container">
@@ -106,18 +95,19 @@
         data: () => ({
             message: '',
             messages: [],
+            usersInTheRoom: [],
             user: {
                 name: "",
                 room: ""
             }
         }),
         sockets: {
-            connect: function () {
-                console.log('socket connected')
-            },
             'message:new': function (data) {
                 this.messages.push(data);
-            }
+            },
+            'users:updated':  function(usersInTheRoom) {
+                this.usersInTheRoom = [...usersInTheRoom];
+            },
         },
         methods: {
             sendMessage() {
@@ -140,12 +130,7 @@
             this.user= {
                 name: this.name,
                 room: this.room
-            }
-            // console.log("user", user)
-            // const user = {
-            //     name: this.name,
-            //     room: this.room
-            // }
+            };
             this.$socket.emit('user:join',this.user, data=> {
                 if(typeof data === 'string') {
                     console.error(data);
@@ -154,13 +139,6 @@
                     console.log('this.user', this.user)
                 }
             })
-            // , err => {
-            //     if(err) {
-            //         console.log(err);
-            //     } else {
-            //         this.message = "";
-            //     }
-            // })
         }
     };
 </script>

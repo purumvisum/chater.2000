@@ -48,7 +48,8 @@ io.on('connection', (socket) => {
             socket.broadcast.to(user.room).emit(
                 "message:new",
                 createMessage('Admin', `${user.name} is here`)
-            )
+            );
+            io.to(user.room).emit("users:updated", users.getByRoom(user.room))
         }
     });
     socket.on("disconnect", () => {
@@ -56,7 +57,8 @@ io.on('connection', (socket) => {
         if (user) {
             io.to(user.room).emit("message:new",
                 createMessage('Admin', `${user.name} left`)
-            )
+            );
+            io.to(user.room).emit("users:updated", users.getByRoom(user.room))
         }
 
     })
