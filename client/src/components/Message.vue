@@ -1,5 +1,5 @@
 <template>
-    <div  v-bind:class="[testYou ? 'activeClass' : 'nonActiveClass']" >
+    <div  v-bind:class="[owner ? 'owner-message ' : 'guest-message']" >
         <small class="author-info">{{author}}</small>
         <v-card
             class="mx-auto"
@@ -15,20 +15,20 @@
 </template>
 
 <style scoped>
-    .activeClass .author-info {
+    .owner-message .author-info {
         text-align: right;
     }
 
-    .activeClass .card-text{
+    .owner-message .card-text{
         background: #424242;
         color: white;
     }
 
-    .nonActiveClass {
+    .guest-message {
         align-self: flex-start;
     }
 
-     .activeClass {
+     .owner-message {
          align-self: flex-end;
     }
 
@@ -46,7 +46,7 @@
 <script>
 
     export default {
-        props: ['author', 'text', 'time', 'testYou'],
+        props: ['author', 'text', 'time', 'owner'],
         // components: {ChooseFileButton, FilesGroups, AddFileGroup},
         data: () => ({
             isYou: true

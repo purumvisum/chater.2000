@@ -52,9 +52,7 @@ export default {
     methods: {
         enterTheRoom() {
             if (this.$refs.form.validate()) {
-                this.$router.push('/chat');
-                let value = 'test';
-                // this.$socket.emit('createMessage','TEST')
+                this.$router.push(`/chat?name=${this.name}&room=${this.room}`);
             }
         },
         submit() {

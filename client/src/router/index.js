@@ -11,7 +11,10 @@ const router = new VueRouter({
     base: __dirname,
     routes: [
         { path: '/', component: CreateRoom },
-        { path: '/chat', component: Chat },
+        { path: '/chat', component: Chat, props: (route) => ({
+            name: route.query.name,
+            room: route.query.room
+        }) },
         { path: "*", component: PageNotFound }
     ]
 });

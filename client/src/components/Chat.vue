@@ -28,31 +28,13 @@
         <div  class="messages-container">
             <v-card  class="mx-auto messages-wrapper"
                      outlined>
-
-                <Message  v-for="message in messages"
-                    :author="`sdvfdvfd`"
+                <Message v-for="(message, idx) in messages"
+                    :author="message.author"
                     :text="message.text"
                     :time="message.date"
-                    :testYou="false"
+                    :owner="message.id === user.id"
+                    :key="idx"
                 ></Message>
-<!--                <Message-->
-<!--                    :author="`sdvfdvfd`"-->
-<!--                    :text="`test texttest texttest texttest texttest texttest texttest text`"-->
-<!--                    :time="`13.50`"-->
-<!--                    :testYou="false"-->
-<!--                ></Message>-->
-<!--                <Message-->
-<!--                :author="`TestAuthor`"-->
-<!--                :text="`test text`"-->
-<!--                :time="`13.45`"-->
-<!--                :testYou="true"-->
-<!--                ></Message>-->
-<!--                <Message-->
-<!--                    :author="`sdvfdvfd`"-->
-<!--                    :text="`test texttest texttest texttest texttest texttest texttest text`"-->
-<!--                    :time="`13.50`"-->
-<!--                    :testYou="false"-->
-<!--                ></Message>-->
             </v-card>
 
             <div style="display: flex; align-items: center;">
@@ -110,7 +92,8 @@
         width: 100%;
         padding: 15px;
         display: flex;
-        flex-direction: column-reverse;
+        /*flex-direction: column-reverse;*/
+        flex-direction: column;
     }
 </style>
 
@@ -118,10 +101,15 @@
     import Message from "./Message";
 
     export default {
+        props:['name', 'room'],
         components: {Message},
         data: () => ({
             message: '',
-            messages: []
+            messages: [],
+            user: {
+                name: "",
+                room: ""
+            }
         }),
         sockets: {
             connect: function () {
@@ -134,17 +122,45 @@
         methods: {
             sendMessage() {
                 const message = {
-                    text: this.message
+                    text: this.message,
+                    author: this.user.name,
+                    id: this.user.id
                 };
 
                 this.$socket.emit('message:create',message, err => {
                     if(err) {
                         console.log(err);
                     } else {
-                        this.message = "";S
+                        this.message = "";
                     }
                 })
             },
+        },
+        mounted(){
+            this.user= {
+                name: this.name,
+                room: this.room
+            }
+            // console.log("user", user)
+            // const user = {
+            //     name: this.name,
+            //     room: this.room
+            // }
+            this.$socket.emit('user:join',this.user, data=> {
+                if(typeof data === 'string') {
+                    console.error(data);
+                } else {
+                    this.user.id=data.userId;
+                    console.log('this.user', this.user)
+                }
+            })
+            // , err => {
+            //     if(err) {
+            //         console.log(err);
+            //     } else {
+            //         this.message = "";
+            //     }
+            // })
         }
     };
 </script>
