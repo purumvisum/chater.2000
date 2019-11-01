@@ -21,7 +21,7 @@ io.on('connection', (socket) => {
             callback("MESSAGE CANNOT BE EMPTY")
         } else {
             callback();
-            socket.emit("message:new", {
+            io.emit("message:new", {
                 text: data.text,
                 date: Date.now()
             })
