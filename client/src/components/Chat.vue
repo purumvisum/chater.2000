@@ -16,6 +16,7 @@
 
         <div  class="messages-container">
             <v-card  class="mx-auto messages-wrapper"
+                     v-chat-scroll
                      outlined>
                 <Message v-for="(message, idx) in messages"
                     :author="message.author"
@@ -77,6 +78,7 @@
     }
 
     .messages-wrapper {
+        overflow: auto;
         height: 90%;
         width: 100%;
         padding: 15px;

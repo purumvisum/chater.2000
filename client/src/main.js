@@ -3,8 +3,9 @@ import router from './router'
 import App from './App.vue'
 import vuetify from './plugins/vuetify'
 import VueSocketIO from 'vue-socket.io'
+import VueChatScroll from 'vue-chat-scroll'
 
-
+Vue.use(VueChatScroll)
 Vue.use(new VueSocketIO({
     debug: true,
     connection: 'http://localhost:3000'
