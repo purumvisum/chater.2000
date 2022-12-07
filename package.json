@@ -16,7 +16,7 @@
   "author": "Daria Ivanovich",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "socket.io": "^2.3.0",
     "vue-chat-scroll": "^1.3.6"
   },
